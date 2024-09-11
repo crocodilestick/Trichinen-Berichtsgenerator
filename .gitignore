@@ -1,0 +1,21 @@
+# IGNORE VIRTUAL ENV. FILES
+.venv/
+
+# FOLDERS TO IGNORE
+excel-method/
+
+# FILETYPES TO IGNORE
+*.xlsx
+*.pdf
+
+# SPECIFIC FILES TO EXCLUDE
+adressen.json
+prufleitung.json
+lab-info.json
+logo-1.jpg
+logo-2.png
+footer.png
+
+# SPECIFIC FILES TO INCLUDE
+!external_example.xlsx
+!laborbuch_example.xlsx
