@@ -139,10 +139,10 @@ class ReportMaker():
                      colspan=len(self.column_widths))
 
             row = table.row()
-            self.pdf.set_font("Helvetica", size=8)
+            self.pdf.set_font("Helvetica", size=7)
             row.cell(("Methode Trichinenuntersuchung: Magnetrührverfahren für die künst"
-                      "liche Verdauung nach DIN EN ISO 18743:2015; Methode Duncker'scher Mus"
-                      "kelegel: PV3764 (2015-02; Hausmethode)"),
+                      "liche Verdauung nach DIN EN ISO 18743:2015 (2023-11); Methode Du"
+                      "ncker'scher Muskelegel: PV3764 (2015-02; Hausmethode)"),
                      colspan=len(self.column_widths))
 
             self.pdf.set_font("Helvetica", size=9.5, style="I")
