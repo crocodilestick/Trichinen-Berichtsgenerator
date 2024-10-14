@@ -114,7 +114,7 @@ class ReportMaker():
                              f"{'Fax:': <10} {self.lab_info['fax_num']: >45}\n"
                              f"{'Email:': <10} {self.prufleiter_email: >45}\n"
                              f"{'Internet:': <10} {self.lab_info['website']: >45}\n\n"
-                             f"{'Auftrag:': <10} {self.excel_data.data[1]['Auftrag']: >45}"
+                             f"{'Auftrag:': <10} {self.excel_data.data[0]['Auftrag']: >45}"
                             )
                       )
         self.pdf.set_xy(x=10, y=30)
