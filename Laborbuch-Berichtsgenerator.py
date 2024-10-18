@@ -141,7 +141,7 @@ class ReportMaker():
             row = table.row()
             self.pdf.set_font("Helvetica", size=7)
             row.cell(("Methode Trichinenuntersuchung: Magnetrührverfahren für die künst"
-                      "liche Verdauung nach DIN EN ISO 18743:2015 (2023-11); Methode Du"
+                      "liche Verdauung nach DIN EN ISO 18743:2015 (2015-12); Methode Du"
                       "ncker'scher Muskelegel: PV3764 (2015-02; Hausmethode)"),
                      colspan=len(self.column_widths))
 
@@ -168,26 +168,27 @@ class ReportMaker():
                                 "Datum Ergebnisvalidation"]
 
             for sample in self.excel_data.data:
-                row = table.row()
-                for header in self.excel_data.column_headers:
-                    if header not in excluded_columns:
-                        if header == "Probenmenge (in g)/ Tier":
-                            row.cell(str(sample[header]) + "g/Tier")
-                        elif header == "Siebrückstand (in g)":
-                            row.cell(str(sample[header]) + "g")
-                        elif header == "Verdauungszeit (in min)":
-                            row.cell(str(sample[header]) + " min")
-                        elif header == "Prüfung Temperatur der Verdauungsflüssigkeit Beginn / Ende (in °C)":
-                            row.cell(str(sample[header]) + " °C")
-                        # elif header == "Prüfung Probe auf Eignung":
-                        #     if sample[header] == "True":
-                        #         self.pdf.set_font("Noto", size=6)
-                        #         row.cell(u'\u2713')
-                        #         self.pdf.set_font("Helvetica", size=6)
-                            # else:
-                            #     row.cell("X")
-                        else:
-                            row.cell(sample[header])
+                if sample["Parameter"] != "kalkulatorischer Euro":
+                    row = table.row()
+                    for header in self.excel_data.column_headers:
+                        if header not in excluded_columns:
+                            if header == "Probenmenge (in g)/ Tier":
+                                row.cell(str(sample[header]) + "g/Tier")
+                            elif header == "Siebrückstand (in g)":
+                                row.cell(str(sample[header]) + "g")
+                            elif header == "Verdauungszeit (in min)":
+                                row.cell(str(sample[header]) + " min")
+                            elif header == "Prüfung Temperatur der Verdauungsflüssigkeit Beginn / Ende (in °C)":
+                                row.cell(str(sample[header]) + " °C")
+                            # elif header == "Prüfung Probe auf Eignung":
+                            #     if sample[header] == "True":
+                            #         self.pdf.set_font("Noto", size=6)
+                            #         row.cell(u'\u2713')
+                            #         self.pdf.set_font("Helvetica", size=6)
+                                # else:
+                                #     row.cell("X")
+                            else:
+                                row.cell(sample[header])
 
     def add_bemerkungen(self):
         self.pdf.ln()
