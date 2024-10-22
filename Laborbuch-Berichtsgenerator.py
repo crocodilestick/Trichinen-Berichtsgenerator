@@ -236,56 +236,66 @@ def main():
     print("|                                   |")
     print("-------------------------------------")
 
-    if len(sys.argv) < 2:
-        print("\nKeine Datei zur Verarbeitung gegeben.\n".upper())
-        print(("Um dieses Programm zu verwenden, ziehen Sie einfach die Excel-Datei mit den\n"
-              "Daten, die Sie aus Limsophy exportiert haben, auf das Symbol des Programms."))
-        input("\nDrücken Sie zum Beenden die Eingabetaste.")
-        sys.exit(1)
-    elif len(sys.argv) > 2:
-        print("\nzu viele Dateien zur Verarbeitung gegeben.\n".upper())
-        print(("Dieses Programm kann nur eine Datei auf einmal verarbeiten. Versuchen Sie\n"
-              "erneut, nur eine Datei bereitzustellen."))
-        input("\nDrücken Sie zum Beenden die Eingabetaste.")
-        sys.exit(2)
+    try:
+        if len(sys.argv) < 2:
+            print("\nKeine Datei zur Verarbeitung gegeben.\n".upper())
+            print(("Um dieses Programm zu verwenden, ziehen Sie einfach die Excel-Datei mit den\n"
+                  "Daten, die Sie aus Limsophy exportiert haben, auf das Symbol des Programms."))
+            input("\nDrücken Sie zum Beenden die Eingabetaste.")
+            sys.exit(1)
+        elif len(sys.argv) > 2:
+            print("\nzu viele Dateien zur Verarbeitung gegeben.\n".upper())
+            print(("Dieses Programm kann nur eine Datei auf einmal verarbeiten. Versuchen Sie\n"
+                  "erneut, nur eine Datei bereitzustellen."))
+            input("\nDrücken Sie zum Beenden die Eingabetaste.")
+            sys.exit(2)
 
-    lab_info = get_lab_info()
+        lab_info = get_lab_info()
 
-    excel_file = sys.argv[1]
-    excel_data = TrichExcel(excel_file)
-    global auftrag_nr
-    auftrag_nr = excel_data.auftrag_nr
+        excel_file = sys.argv[1]
+        excel_filename = os.path.basename(excel_file).replace('.xlsx', '')
+        excel_data = TrichExcel(excel_file)
+        global auftrag_nr
+        auftrag_nr = excel_data.auftrag_nr
 
-    # DEBUGGING
-    # pprint(excel_data.data, sort_dicts=False)
-    # input("")
+        # DEBUGGING
+        # pprint(excel_data.data, sort_dicts=False)
+        # input("")
 
-    prufleiter = get_prufleiter_data()
-    print(f"\nWillkommen {prufleiter['name']}! Bericht generieren...")
+        prufleiter = get_prufleiter_data()
+        print(f"\nWillkommen {prufleiter['name']}! Bericht generieren...")
 
-    pdf = PDF(orientation="landscape", format="A4")
-    pdf.add_font(family="Noto", fname=f"{current_dir}/assets/NotoSansMono-Regular.ttf")
-    pdf.add_page()
+        pdf = PDF(orientation="landscape", format="A4")
+        pdf.add_font(family="Noto", fname=f"{current_dir}/assets/NotoSansMono-Regular.ttf")
+        pdf.add_page()
 
-    report = ReportMaker(pdf, lab_info, excel_data, prufleiter)
-    report.add_header()
-    report.add_title_table()
-    report.add_data_table()
+        report = ReportMaker(pdf, lab_info, excel_data, prufleiter)
+        report.add_header()
+        report.add_title_table()
+        report.add_data_table()
 
-    bemerkungen = []
-    for sample in excel_data.data:
-        if sample["Bemerkung"] is not None:
-            bemerkungen.append(sample["Bemerkung"])
-    if len(bemerkungen) > 0:
-        report.add_bemerkungen()
+        bemerkungen = []
+        for sample in excel_data.data:
+            if sample["Bemerkung"] is not None:
+                bemerkungen.append(sample["Bemerkung"])
+        if len(bemerkungen) > 0:
+            report.add_bemerkungen()
 
-    report.add_end_of_report()
+        report.add_end_of_report()
 
-    print("\nBericht erfolgreich erstellt!")
-    report_name = input("\nGeben Sie einen Dateinamen für den Bericht ein: ").strip().replace(" ", "_")
-    report.save(report_name + ".pdf")
+        print("\nBericht erfolgreich erstellt!")
+        print("\nGeben Sie einen Namen für die Berichtsdatei ein oder drücken Sie\n"
+              "einfach die Eingabetaste, um denselben Namen wie die ursprüngliche\n"
+              "Excel-Datei zu verwenden.\n")
+        report_name = input("Dateiname für den Bericht: ").strip().replace(" ", "_")
+        if report_name == "":
+            report_name = excel_filename
+        report.save(report_name + ".pdf")
 
-    sys.exit(0)
+        sys.exit(0)
+    except Exception as e:
+        print(f"The following error occurred: {e}")
+        input("Press Enter to exit")
 
 def get_prufleiter_data() -> dict[str, str]:
     while True:
