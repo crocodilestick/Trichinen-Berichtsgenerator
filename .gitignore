@@ -1,5 +1,6 @@
 # IGNORE VIRTUAL ENV. FILES
-.venv/
+**/.venv
+**/.history
 
 # FOLDERS TO IGNORE
 excel-method/

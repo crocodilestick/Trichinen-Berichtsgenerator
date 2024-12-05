@@ -162,7 +162,7 @@ class ReportMaker():
                                 "Datum Ergebnisvalidation"]
 
             for sample in self.excel_data.data:
-                if sample["Parameter"] == "Trichinella sp.":
+                if sample["Parameter"] == "Trichinella sp." or sample["Parameter"] == "Alaria alata":
                     row = table.row()
                     for header in self.excel_data.column_headers:
                         if header not in excluded_columns:
