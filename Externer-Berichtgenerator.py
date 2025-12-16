@@ -138,9 +138,8 @@ class ReportMaker():
 
             row = table.row()
             self.pdf.set_font("Helvetica", size=7)
-            row.cell(("Methode Trichinenuntersuchung: Magnetrührverfahren für die künst"
-                      "liche Verdauung nach DIN EN ISO 18743:2015 (2015-12); Methode Du"
-                      "ncker'scher Muskelegel: PV3764 (2015-02; Hausmethode)"),
+            row.cell(("Methode Trichinenuntersuchung: Magnetrührverfahren für die künstliche "
+                      "Verdauung nach ISO 18743:2015/Amd1:2023 (2023-11)"),
                      colspan=len(self.column_widths))
 
             self.pdf.set_font("Helvetica", size=9.5)
